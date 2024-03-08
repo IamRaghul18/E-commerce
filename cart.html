@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cart.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+</head>
+<body>
+    <!-- HEADER -->
+    <section id="header">
+        <a href="#">Raghul-Shop</a>
+        <div>
+            <ul id="navbar">
+                <li><a  href="index.html">Home</a></li>
+                <li><a  href="shop.html">Shop</a></li>
+               
+                <li><a href="contact.html">Contact</a></li>
+                <li id="lg-bag"><a class="active" href="cart.html"><i class="fas fa-shopping-bag"></i></a></li>
+                <a href="#" id="close"><i class="fas fa-times"></i></a>
+            </ul>
+        </div>
+        <div id="mobile">
+            <a href="cart.html"><i class="fas fa-shopping-bag"></i></a>
+            <i id="bar" class="fas fa-bars"></i>
+        </div>
+    </section>
+
+    <section id="pageheader" class="section-p1">
+        <h2 style="color: aqua;">Your Cart</h2>
+    </section>
+    <section  style=" text-align: center;" id="cart-section">
+       
+        <div id="cart-items">
+            <!-- Cart items will be displayed here -->
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="section-p1">
+        <div class="col">
+            
+            <h4>Contact</h4>
+            <p><strong>Address: </strong>562 Wasington Road, Street 32, San-fransisco</p>
+            <p><strong>Phone: </strong>+01222 365 /(+91)012345 6789</p>
+            <p><strong>Hours: </strong>10:00-18:00, Mon-sat</p>
+            <div class="follow">
+                <h4>Follow Us</h4>
+                <div class="icon">
+                    <a href="https://github.com/IamRaghul18" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://twitter.com/raghul_codes"target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.linkedin.com/in/raghulprasad-/"target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://raghul018-portfolio.netlify.app/"target="_blank"><i class="fas fa-globe"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <h4>My Account</h4>
+            <a href="#">Sign-in</a>
+            <a href="#">View-Cart</a>
+            <a href="#">My Wish List</a>
+            <a href="#">Track My Order</a>
+            <a href="#">Help</a>
+        </div>
+        <div class="col-install">
+            <h4>Install App</h4>
+            <p>From App  store or Google Play</p>
+            <div class="row">
+                <img src="img/pay/app.jpg" alt="">
+                <img src="img/pay/play.jpg" alt="">
+            </div>
+            <p>Secured Payment Gateways</p>
+            <img src="img/pay/pay.png" alt="">
+        </div>
+        <div class="copyright"><p>&copy; 2024 @raghul_codes</p></div>
+    </footer>
+    <script>
+        const bar=document.getElementById("bar");
+        const nav=document.getElementById('navbar');
+        const close=document.getElementById('close');
+
+        if(bar){
+            bar.addEventListener('click',()=>{
+                nav.classList.add('active');
+            })
+        }
+
+        if(close){
+            close.addEventListener('click',()=>{
+                nav.classList.remove('active');
+    })
+}
+        // Retrieve cart items from localStorage
+        const cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      
+        // Display cart items
+        const cartItemsContainer = document.getElementById('cart-items');
+        cartItems.forEach((item, index) => {
+          const itemElement = document.createElement('div');
+          itemElement.innerHTML = `
+              <h2>${item.productName}</h2>
+              <p>Brand: ${item.productBrand}</p>
+              <p>Price: $${item.productPrice}</p>
+              <p>Description: ${item.productDescription}</p>
+              <button class="btn1" >order Now</button>
+              <button onclick="deleteItem(${index})">Delete</button>
+          `;
+          cartItemsContainer.appendChild(itemElement);
+        });
+      
+        // Function to delete an item from the cart
+        function deleteItem(index) {
+          // Remove the item from the cartItems array
+          cartItems.splice(index, 1);
+      
+          // Save the updated cart items to localStorage
+          localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      
+          // Clear the existing cart items on the page
+          cartItemsContainer.innerHTML = '';
+      
+          // Re-display the updated cart items
+          cartItems.forEach((item, newIndex) => {
+            const newItemElement = document.createElement('div');
+            newItemElement.innerHTML = `
+                <h2>${item.productName}</h2>
+                <p>Brand: ${item.productBrand}</p>
+                <p>Price: $${item.productPrice}</p>
+                <p>Description: ${item.productDescription}</p>
+                <button class="btn1">order Now</button>
+                <button onclick="deleteItem(${newIndex})">Delete</button>
+            `;
+            cartItemsContainer.appendChild(newItemElement);
+          });
+        }
+      </script>
+      
+</body>
+</html>
