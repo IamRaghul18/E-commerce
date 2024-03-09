@@ -54,6 +54,8 @@ function openModal(productName, productBrand, productPrice, productDescription, 
   function closeModal() {
     var modal = document.getElementById('productModal');
     modal.style.display = 'none';
+    modal.style.transition = '0.3s ease-out';
+
   }
 
   function addToCart(productName, productBrand, productPrice, productDescription) {
@@ -72,6 +74,17 @@ function openModal(productName, productBrand, productPrice, productDescription, 
 
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
     // alert(`${productName} added to the cart!`); Optional
+    if ('Notification' in window) {
+        // Request permission to show notifications
+        Notification.requestPermission().then((permission) => {
+            if (permission === 'granted') {
+                // Show a notification
+                new Notification(`${productName} added to the cart!`);
+                closeModal();
+                
+            }
+        });
+    }
     
   }
   
